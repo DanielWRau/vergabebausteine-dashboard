@@ -1,6 +1,8 @@
-import { Show } from "@refinedev/mui";
+import { Show } from "@refinedev/antd";
 import { useShow } from "@refinedev/core";
-import { Typography, Stack } from "@mui/material";
+import { Typography } from "antd";
+
+const { Title, Text } = Typography;
 
 interface IUser {
   $id: string;
@@ -19,41 +21,23 @@ export const UserShow: React.FC = () => {
 
   return (
     <Show isLoading={isLoading}>
-      <Stack gap={1}>
-        <Typography variant="body1" fontWeight="bold">
-          ID
-        </Typography>
-        <Typography variant="body2">{record?.$id}</Typography>
+      <Title level={5}>ID</Title>
+      <Text>{record?.$id}</Text>
 
-        <Typography variant="body1" fontWeight="bold">
-          Name
-        </Typography>
-        <Typography variant="body2">{record?.name}</Typography>
+      <Title level={5}>Name</Title>
+      <Text>{record?.name}</Text>
 
-        <Typography variant="body1" fontWeight="bold">
-          Email
-        </Typography>
-        <Typography variant="body2">{record?.email}</Typography>
+      <Title level={5}>Email</Title>
+      <Text>{record?.email}</Text>
 
-        <Typography variant="body1" fontWeight="bold">
-          Role
-        </Typography>
-        <Typography variant="body2">{record?.role}</Typography>
+      <Title level={5}>Role</Title>
+      <Text>{record?.role}</Text>
 
-        <Typography variant="body1" fontWeight="bold">
-          Created At
-        </Typography>
-        <Typography variant="body2">
-          {record?.$createdAt ? new Date(record.$createdAt).toLocaleString() : ""}
-        </Typography>
+      <Title level={5}>Created At</Title>
+      <Text>{record?.$createdAt ? new Date(record.$createdAt).toLocaleString() : ""}</Text>
 
-        <Typography variant="body1" fontWeight="bold">
-          Updated At
-        </Typography>
-        <Typography variant="body2">
-          {record?.$updatedAt ? new Date(record.$updatedAt).toLocaleString() : ""}
-        </Typography>
-      </Stack>
+      <Title level={5}>Updated At</Title>
+      <Text>{record?.$updatedAt ? new Date(record.$updatedAt).toLocaleString() : ""}</Text>
     </Show>
   );
 };

@@ -1,6 +1,5 @@
-import { List, EditButton, ShowButton, DeleteButton } from "@refinedev/mui";
-import { useDataGrid } from "@refinedev/mui";
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
+import { List, useTable, EditButton, ShowButton, DeleteButton } from "@refinedev/antd";
+import { Space } from "antd";
 import type { IResourceComponentsProps } from "@refinedev/core";
 
 interface IUser {
@@ -13,63 +12,42 @@ interface IUser {
 }
 
 export const UserList: React.FC<IResourceComponentsProps> = () => {
-  const { dataGridProps } = useDataGrid<IUser>();
-
-  const columns: GridColDef[] = [
-    {
-      field: "$id",
-      headerName: "ID",
-      minWidth: 200,
-      flex: 1,
-    },
-    {
-      field: "name",
-      headerName: "Name",
-      minWidth: 150,
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      minWidth: 200,
-      flex: 1,
-    },
-    {
-      field: "role",
-      headerName: "Role",
-      minWidth: 100,
-      flex: 0.5,
-    },
-    {
-      field: "$createdAt",
-      headerName: "Created At",
-      minWidth: 180,
-      flex: 1,
-      renderCell: ({ value }) => new Date(value).toLocaleString(),
-    },
-    {
-      field: "actions",
-      headerName: "Actions",
-      minWidth: 180,
-      sortable: false,
-      renderCell: ({ row }) => (
-        <>
-          <EditButton hideText recordItemId={row.$id} />
-          <ShowButton hideText recordItemId={row.$id} />
-          <DeleteButton hideText recordItemId={row.$id} />
-        </>
-      ),
-    },
-  ];
+  const { tableProps } = useTable<IUser>({
+    syncWithLocation: true,
+  });
 
   return (
     <List>
-      <DataGrid
-        {...(dataGridProps as any)}
-        columns={columns}
-        getRowId={(row) => row.$id}
-        autoHeight
-      />
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <thead>
+          <tr style={{ borderBottom: "1px solid #f0f0f0" }}>
+            <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>ID</th>
+            <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>Name</th>
+            <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>Email</th>
+            <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>Role</th>
+            <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>Created At</th>
+            <th style={{ padding: "12px", textAlign: "left", fontWeight: 600 }}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {(tableProps.dataSource || []).map((record: IUser) => (
+            <tr key={record.$id} style={{ borderBottom: "1px solid #f0f0f0" }}>
+              <td style={{ padding: "12px" }}>{record.$id}</td>
+              <td style={{ padding: "12px" }}>{record.name}</td>
+              <td style={{ padding: "12px" }}>{record.email}</td>
+              <td style={{ padding: "12px" }}>{record.role}</td>
+              <td style={{ padding: "12px" }}>{new Date(record.$createdAt).toLocaleString()}</td>
+              <td style={{ padding: "12px" }}>
+                <Space>
+                  <EditButton hideText size="small" recordItemId={record.$id} />
+                  <ShowButton hideText size="small" recordItemId={record.$id} />
+                  <DeleteButton hideText size="small" recordItemId={record.$id} />
+                </Space>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </List>
   );
 };
