@@ -1,0 +1,16 @@
+{
+  "projectId": "69214d3d003de369905e",
+  "projectName": "Vergabebausteine",
+  "sites": [
+    {
+      "siteId": "vergabebausteine-dashboard",
+      "name": "Vergabebausteine Dashboard",
+      "domain": "",
+      "type": "static",
+      "installCommand": "npm install",
+      "buildCommand": "npm run build",
+      "outputDirectory": "dist",
+      "rootDirectory": "/"
+    }
+  ]
+}
