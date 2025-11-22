@@ -17,6 +17,11 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { App as AntdApp, ConfigProvider } from "antd";
 import { appwriteClient } from "./utility/appwriteClient";
 import { authProvider } from "./authProvider";
+import { UserList } from "./pages/users/list";
+import { UserCreate } from "./pages/users/create";
+import { UserEdit } from "./pages/users/edit";
+import { UserShow } from "./pages/users/show";
+import { AiDemo } from "./pages/ai-demo";
 
 import "@refinedev/antd/dist/reset.css";
 
@@ -52,6 +57,13 @@ function App() {
                     label: "Users",
                   },
                 },
+                {
+                  name: "ai-demo",
+                  list: "/ai-demo",
+                  meta: {
+                    label: "AI Demo",
+                  },
+                },
               ]}
               options={{
                 syncWithLocation: true,
@@ -75,11 +87,12 @@ function App() {
                 >
                   <Route index element={<NavigateToResource resource="users" />} />
                   <Route path="/users">
-                    <Route index element={<div>Users List</div>} />
-                    <Route path="create" element={<div>Create User</div>} />
-                    <Route path="edit/:id" element={<div>Edit User</div>} />
-                    <Route path="show/:id" element={<div>Show User</div>} />
+                    <Route index element={<UserList />} />
+                    <Route path="create" element={<UserCreate />} />
+                    <Route path="edit/:id" element={<UserEdit />} />
+                    <Route path="show/:id" element={<UserShow />} />
                   </Route>
+                  <Route path="/ai-demo" element={<AiDemo />} />
                   <Route path="*" element={<ErrorComponent />} />
                 </Route>
 
