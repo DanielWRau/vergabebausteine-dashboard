@@ -17,6 +17,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { App as AntdApp, ConfigProvider } from "antd";
 import { appwriteClient } from "./utility/appwriteClient";
 import { authProvider } from "./authProvider";
+import { DashboardPage } from "./pages/dashboard";
 import { UserList } from "./pages/users/list";
 import { UserCreate } from "./pages/users/create";
 import { UserEdit } from "./pages/users/edit";
@@ -48,6 +49,14 @@ function App() {
               notificationProvider={useNotificationProvider}
               resources={[
                 {
+                  name: "dashboard",
+                  list: "/",
+                  meta: {
+                    label: "Dashboard",
+                    icon: "📊",
+                  },
+                },
+                {
                   name: APPWRITE_USERS_COLLECTION_ID,
                   list: "/users",
                   create: "/users/create",
@@ -55,6 +64,7 @@ function App() {
                   show: "/users/show/:id",
                   meta: {
                     label: "Users",
+                    icon: "👥",
                   },
                 },
                 {
@@ -62,6 +72,7 @@ function App() {
                   list: "/ai-demo",
                   meta: {
                     label: "AI Demo",
+                    icon: "🤖",
                   },
                 },
               ]}
@@ -85,7 +96,7 @@ function App() {
                     </Authenticated>
                   }
                 >
-                  <Route index element={<NavigateToResource resource="users" />} />
+                  <Route index element={<DashboardPage />} />
                   <Route path="/users">
                     <Route index element={<UserList />} />
                     <Route path="create" element={<UserCreate />} />
@@ -108,6 +119,7 @@ function App() {
                     element={
                       <AuthPage
                         type="login"
+                        title="Vergabebausteine CRM"
                         formProps={{
                           initialValues: {
                             email: "test@vergabebausteine.de",
