@@ -10,15 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@refinedev/antd": "^6.0.3",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.5",
+    "@mui/material": "^7.3.5",
+    "@mui/x-data-grid": "^8.19.0",
     "@refinedev/appwrite": "^8.0.1",
     "@refinedev/core": "^5.0.6",
     "@refinedev/kbar": "^2.0.1",
+    "@refinedev/mui": "^7.0.1",
+    "@refinedev/react-hook-form": "^5.0.3",
     "@refinedev/react-router": "^2.0.3",
-    "antd": "^6.0.0",
     "appwrite": "^21.4.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.66.1",
     "react-router-dom": "^7.9.6"
   },
   "devDependencies": {

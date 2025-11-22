@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { Card, Input, Button, Typography, Space, Alert, Spin, Divider } from "antd";
-import { SendOutlined, ThunderboltOutlined } from "@ant-design/icons";
-
-const { Title, Text, Paragraph } = Typography;
-const { TextArea } = Input;
+import {
+  Card,
+  CardContent,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Alert,
+  CircularProgress,
+  Divider,
+  Stack,
+} from "@mui/material";
+import { Send as SendIcon, Bolt as BoltIcon } from "@mui/icons-material";
 
 export const AiDemo: React.FC = () => {
   const [inputText, setInputText] = useState("");
@@ -22,7 +30,7 @@ export const AiDemo: React.FC = () => {
     setOutput("");
 
     try {
-      // Simulate AI processing with different transformations
+      // Simulate AI processing
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // Demo transformations
@@ -84,91 +92,118 @@ ${summary || "No content to summarize"}
   };
 
   return (
-    <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
-      <Title level={2}>
-        <ThunderboltOutlined /> AI Text Processing Demo
-      </Title>
-      <Paragraph>
+    <Box sx={{ p: 3, maxWidth: 1200, margin: "0 auto" }}>
+      <Typography variant="h4" gutterBottom>
+        <BoltIcon sx={{ mr: 1, verticalAlign: "middle" }} />
+        AI Text Processing Demo
+      </Typography>
+      <Typography variant="body1" paragraph>
         Enter your text below and click "Process with AI" to analyze it. This demo showcases
         text analysis including word count, sentiment analysis, and automatic summarization.
-      </Paragraph>
+      </Typography>
 
-      <Space direction="vertical" size="large" style={{ width: "100%" }}>
+      <Stack spacing={3}>
         {/* Input Section */}
-        <Card title="📝 Input Text" bordered={true}>
-          <TextArea
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="Enter your text here... (e.g., 'This is a great product! I love how it works. The features are amazing and the quality is excellent.')"
-            autoSize={{ minRows: 6, maxRows: 12 }}
-            style={{ fontSize: "16px" }}
-          />
-          <div style={{ marginTop: "16px", display: "flex", gap: "8px" }}>
-            <Button
-              type="primary"
-              icon={<SendOutlined />}
-              onClick={handleProcess}
-              loading={processing}
-              size="large"
-            >
-              Process with AI
-            </Button>
-            <Button onClick={handleClear} size="large">
-              Clear
-            </Button>
-          </div>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              📝 Input Text
+            </Typography>
+            <TextField
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Enter your text here... (e.g., 'This is a great product! I love how it works. The features are amazing and the quality is excellent.')"
+              multiline
+              rows={6}
+              fullWidth
+              variant="outlined"
+              sx={{ mb: 2 }}
+            />
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <Button
+                variant="contained"
+                startIcon={<SendIcon />}
+                onClick={handleProcess}
+                disabled={processing}
+                size="large"
+              >
+                {processing ? "Processing..." : "Process with AI"}
+              </Button>
+              <Button onClick={handleClear} size="large" variant="outlined">
+                Clear
+              </Button>
+            </Box>
+          </CardContent>
         </Card>
 
         {/* Processing Indicator */}
         {processing && (
           <Card>
-            <div style={{ textAlign: "center", padding: "24px" }}>
-              <Spin size="large" />
-              <div style={{ marginTop: "16px" }}>
-                <Text>🤖 AI is analyzing your text...</Text>
-              </div>
-            </div>
+            <CardContent>
+              <Box sx={{ textAlign: "center", py: 3 }}>
+                <CircularProgress size={60} />
+                <Typography variant="body1" sx={{ mt: 2 }}>
+                  🤖 AI is analyzing your text...
+                </Typography>
+              </Box>
+            </CardContent>
           </Card>
         )}
 
         {/* Error Message */}
         {error && (
           <Alert
-            message="Error"
-            description={error}
-            type="error"
-            showIcon
-            closable
+            severity="error"
             onClose={() => setError("")}
-          />
+          >
+            {error}
+          </Alert>
         )}
 
         {/* Output Section */}
         {output && !processing && (
-          <Card title="✨ AI Processing Results" bordered={true}>
-            <div style={{ whiteSpace: "pre-line", fontSize: "16px", lineHeight: "1.8" }}>
-              {output}
-            </div>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                ✨ AI Processing Results
+              </Typography>
+              <Typography
+                component="pre"
+                sx={{
+                  whiteSpace: "pre-line",
+                  fontSize: "16px",
+                  lineHeight: 1.8,
+                  fontFamily: "inherit",
+                }}
+              >
+                {output}
+              </Typography>
+            </CardContent>
           </Card>
         )}
 
         {/* Information Section */}
         <Divider />
-        <Card title="ℹ️ About This Demo" bordered={true}>
-          <Paragraph>
-            This demonstration showcases a simple AI text processing workflow:
-          </Paragraph>
-          <ul>
-            <li><strong>Input Stage:</strong> User enters text for analysis</li>
-            <li><strong>Processing Stage:</strong> AI analyzes the text (word count, sentiment, summary)</li>
-            <li><strong>Output Stage:</strong> Results are displayed with formatting</li>
-          </ul>
-          <Paragraph>
-            In a production environment, this could connect to real AI services like OpenAI GPT,
-            Anthropic Claude, or custom models for more advanced processing capabilities.
-          </Paragraph>
+        <Card>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              ℹ️ About This Demo
+            </Typography>
+            <Typography variant="body1" paragraph>
+              This demonstration showcases a simple AI text processing workflow:
+            </Typography>
+            <ul>
+              <li><strong>Input Stage:</strong> User enters text for analysis</li>
+              <li><strong>Processing Stage:</strong> AI analyzes the text (word count, sentiment, summary)</li>
+              <li><strong>Output Stage:</strong> Results are displayed with formatting</li>
+            </ul>
+            <Typography variant="body1">
+              In a production environment, this could connect to real AI services like OpenAI GPT,
+              Anthropic Claude, or custom models for more advanced processing capabilities.
+            </Typography>
+          </CardContent>
         </Card>
-      </Space>
-    </div>
+      </Stack>
+    </Box>
   );
 };
